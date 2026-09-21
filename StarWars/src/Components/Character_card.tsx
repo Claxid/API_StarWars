@@ -14,18 +14,29 @@ function PeopleList() {
   const [people, setPeople] = useState<Person[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const fetchPeople = async () => {
       setLoading(true);
+      setError(null);
       try {
-        const res = await fetch(`https://www.swapi.tech/api/people?page=${page}&limit=12`);
-        if (!res.ok) throw new Error('Erreur réseau');
-        const json: PeopleResponse = await res.json();
-        setPeople(json.results);
-        setTotalPages(json.total_pages);
+        const firstResponse = await fetch('https://www.swapi.tech/api/people?page=1&limit=12');
+        if (!firstResponse.ok) throw new Error('Erreur réseau');
+
+        const firstPage: PeopleResponse = await firstResponse.json();
+        const remainingPages = Array.from(
+          { length: firstPage.total_pages - 1 },
+          (_, index) => index + 2,
+        );
+        const pages = await Promise.all(
+          remainingPages.map(async (page) => {
+            const response = await fetch(`https://www.swapi.tech/api/people?page=${page}&limit=12`);
+            if (!response.ok) throw new Error('Erreur réseau');
+            return response.json() as Promise<PeopleResponse>;
+          }),
+        );
+
+        setPeople([firstPage, ...pages].flatMap((page) => page.results));
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Une erreur est survenue');
       } finally {
@@ -34,39 +45,28 @@ function PeopleList() {
     };
 
     fetchPeople();
-  }, [page]); // re-fetch à chaque changement de page
+  }, []);
 
   if (loading) return <p>Chargement...</p>;
   if (error) return <p>Erreur : {error}</p>;
 
   return (
-    <div>
-      <h1>Personnages Star Wars</h1>
+    <main className="characters-page">
+      <header className="characters-header">
+        <p className="eyebrow">Base de données galactique</p>
+        <h1>Personnages Star Wars</h1>
+        <p>{people.length} personnages trouvés dans l'API.</p>
+      </header>
 
-      <ul>
+      <ul className="characters-grid">
         {people.map((person) => (
-          <li key={person.uid}>{person.name}</li>
+          <li className="character-card" key={person.uid}>
+            <span className="character-number">{person.uid}</span>
+            <h2>{person.name}</h2>
+          </li>
         ))}
       </ul>
-
-      <div>
-        <button
-          onClick={() => setPage((p) => p - 1)}
-          disabled={page === 1}
-        >
-          Précédent
-        </button>
-
-        <span> Page {page} / {totalPages} </span>
-
-        <button
-          onClick={() => setPage((p) => p + 1)}
-          disabled={page === totalPages}
-        >
-          Suivant
-        </button>
-      </div>
-    </div>
+    </main>
   );
 }
 
