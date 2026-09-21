@@ -1,17 +1,15 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
+import { Routes, Route } from 'react-router-dom'
 import './App.css'
+import Home from './pages/Home..tsx'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <section className="hero">
-        <img src={heroImg} className="base" width="170" height="179" alt="" />
-      </section>
+      <h1>StarWars 1</h1>
+      <button>Home</button>
+      <Routes>
+        <Route path="/home" element={<Home />} />
+      </Routes>
     </>
   )
 }
