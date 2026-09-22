@@ -178,8 +178,8 @@
 }
 
 .character-card:hover {
-  border-color: var(--accent-border);
-  box-shadow: var(--shadow);
+  border-color: rgba(192, 132, 252, 0.7);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
   transform: translateY(-3px);
 }
 
@@ -192,6 +192,14 @@
 .character-card h2 {
   margin-top: 18px;
   overflow-wrap: anywhere;
+}
+
+.character-gender {
+  display: inline-block;
+  margin-top: 12px;
+  color: #d8b4fe;
+  font-size: 0.75rem;
+  text-transform: capitalize;
 }
 
 @media (max-width: 900px) {
