@@ -14,6 +14,7 @@ function PeopleList() {
   const [people, setPeople] = useState<Person[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     const fetchPeople = async () => {
@@ -47,6 +48,10 @@ function PeopleList() {
     fetchPeople();
   }, []);
 
+  const filteredPeople = people.filter((person) =>
+    person.name.toLowerCase().includes(search.trim().toLowerCase()),
+  );
+
   if (loading) return <p>Chargement...</p>;
   if (error) return <p>Erreur : {error}</p>;
 
@@ -55,17 +60,32 @@ function PeopleList() {
       <header className="characters-header">
         <p className="eyebrow">Base de données galactique</p>
         <h1>Personnages Star Wars</h1>
-        <p>{people.length} personnages trouvés dans l'API.</p>
+        <p>{filteredPeople.length} personnages trouvés dans l'API.</p>
       </header>
 
-      <ul className="characters-grid">
-        {people.map((person) => (
-          <li className="character-card" key={person.uid}>
-            <span className="character-number">{person.uid}</span>
-            <h2>{person.name}</h2>
-          </li>
-        ))}
-      </ul>
+      <div className="search-bar-wrap">
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Rechercher un personnage..."
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
+          aria-label="Rechercher un personnage"
+        />
+      </div>
+
+      {filteredPeople.length === 0 ? (
+        <p className="no-result">Aucun personnage trouvé pour "{search}".</p>
+      ) : (
+        <ul className="characters-grid">
+          {filteredPeople.map((person) => (
+            <li className="character-card" key={person.uid}>
+              <span className="character-number">{person.uid}</span>
+              <h2>{person.name}</h2>
+            </li>
+          ))}
+        </ul>
+      )}
     </main>
   );
 }
