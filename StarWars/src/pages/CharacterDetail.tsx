@@ -57,7 +57,7 @@ export default function CharacterDetail() {
 
         setCharacter({
           uid: result.uid ?? id,
-          name: result.name ?? 'Personnage inconnu',
+          name: result.name ?? 'Personnage ',
           description: result.description ?? 'Aucune description disponible.',
           properties: result.properties ?? {},
         });
