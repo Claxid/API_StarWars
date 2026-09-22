@@ -59,7 +59,7 @@ function PeopleList() {
     <main className="characters-page">
       <header className="characters-header">
         <p className="eyebrow">Base de données galactique</p>
-        <h1>Personnages Star Wars</h1>
+        <h2>Personnages Star Wars</h2>
         <p>{filteredPeople.length} personnages trouvés dans l'API.</p>
       </header>
 
