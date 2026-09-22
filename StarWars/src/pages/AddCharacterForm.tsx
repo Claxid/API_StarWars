@@ -68,42 +68,42 @@ export default function AddCharacterForm({ onAdd }: AddCharacterFormProps) {
       </div>
 
       <div className="form-field">
-        <label htmlFor="character-gender">Genre</label>
+        <label htmlFor="character-gender">Gender</label>
         <input id="character-gender" type="text" value={gender} onChange={(event) => setGender(event.target.value)} />
       </div>
 
       <div className="form-field">
-        <label htmlFor="character-height">Taille</label>
+        <label htmlFor="character-height">Height</label>
         <input id="character-height" type="text" value={height} onChange={(event) => setHeight(event.target.value)} />
       </div>
 
       <div className="form-field">
-        <label htmlFor="character-mass">Poids</label>
+        <label htmlFor="character-mass">Mass</label>
         <input id="character-mass" type="text" value={mass} onChange={(event) => setMass(event.target.value)} />
       </div>
 
       <div className="form-field">
-        <label htmlFor="character-birth-year">Année de naissance</label>
+        <label htmlFor="character-birth-year">Birth Year</label>
         <input id="character-birth-year" type="text" value={birthYear} onChange={(event) => setBirthYear(event.target.value)} />
       </div>
 
       <div className="form-field">
-        <label htmlFor="character-eye-color">Couleur des yeux</label>
+        <label htmlFor="character-eye-color">Eye Color</label>
         <input id="character-eye-color" type="text" value={eyeColor} onChange={(event) => setEyeColor(event.target.value)} />
       </div>
 
       <div className="form-field">
-        <label htmlFor="character-hair-color">Couleur des cheveux</label>
+        <label htmlFor="character-hair-color">Hair Color</label>
         <input id="character-hair-color" type="text" value={hairColor} onChange={(event) => setHairColor(event.target.value)} />
       </div>
 
       <div className="form-field">
-        <label htmlFor="character-skin-color">Couleur de peau</label>
+        <label htmlFor="character-skin-color">Skin Color</label>
         <input id="character-skin-color" type="text" value={skinColor} onChange={(event) => setSkinColor(event.target.value)} />
       </div>
 
       <div className="form-action">
-        <button type="submit">Ajouter</button>
+        <button type="submit">Add Character</button>
       </div>
     </form>
   );

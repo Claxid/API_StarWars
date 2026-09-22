@@ -9,11 +9,11 @@ export default function Header() {
         </Link>
 
         <Link to="/characters" className="home-link">
-          <button type="button" className="home-button">Voir personnages</button>
+          <button type="button" className="home-button">View Characters</button>
         </Link>
 
         <Link to="/add-character" className="home-link">
-          <button type="button" className="home-button">Ajouter personnage</button>
+          <button type="button" className="home-button">Add Character</button>
         </Link>
       </div>
     </header>

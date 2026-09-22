@@ -57,7 +57,7 @@ export default function CharacterDetail() {
 
         setCharacter({
           uid: result.uid ?? id,
-          name: result.name ?? 'Personnage ',
+          name: result.properties?.name ?? result.name ?? 'Personnage',
           description: result.description ?? 'Aucune description disponible.',
           properties: result.properties ?? {},
         });
@@ -81,13 +81,13 @@ export default function CharacterDetail() {
       <p>{character.description}</p>
 
       <ul>
-        <li>Genre : {character.properties?.gender ?? 'Inconnu'}</li>
-        <li>Taille : {character.properties?.height ?? 'Inconnu'}</li>
-        <li>Poids : {character.properties?.mass ?? 'Inconnu'}</li>
-        <li>Année de naissance : {character.properties?.birth_year ?? 'Inconnu'}</li>
-        <li>Couleur des yeux : {character.properties?.eye_color ?? 'Inconnu'}</li>
-        <li>Couleur des cheveux : {character.properties?.hair_color ?? 'Inconnu'}</li>
-        <li>Couleur de peau : {character.properties?.skin_color ?? 'Inconnu'}</li>
+        <li>Gender : {character.properties?.gender ?? 'Inconnu'}</li>
+        <li>Height : {character.properties?.height ?? 'Inconnu'}</li>
+        <li>Mass : {character.properties?.mass ?? 'Inconnu'}</li>
+        <li>Birth Year : {character.properties?.birth_year ?? 'Inconnu'}</li>
+        <li>Eye Color : {character.properties?.eye_color ?? 'Inconnu'}</li>
+        <li>Hair Color : {character.properties?.hair_color ?? 'Inconnu'}</li>
+        <li>Skin Color : {character.properties?.skin_color ?? 'Inconnu'}</li>
       </ul>
     </main>
   );
