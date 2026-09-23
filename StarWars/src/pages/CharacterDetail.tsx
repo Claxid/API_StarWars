@@ -71,9 +71,9 @@ export default function CharacterDetail() {
     fetchCharacter();
   }, [id]);
 
-  if (loading) return <p>Chargement du personnage...</p>;
+  if (loading) return <p>login du personnage...</p>;
   if (error) return <p>Erreur : {error}</p>;
-  if (!character) return <p>Personnage introuvable.</p>;
+  if (!character) return <p>login introuvable.</p>;
 
   return (
     <main className="character-detail-page">
