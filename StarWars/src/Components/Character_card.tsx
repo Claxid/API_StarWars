@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 interface Person {
   uid: string;
@@ -103,7 +104,7 @@ function PeopleList() {
     <main className="characters-page">
       <header className="characters-header">
         <p className="eyebrow">Base de données galactique</p>
-        <h1>Personnages Star Wars</h1>
+        <h2>Personnages Star Wars</h2>
         <p>{filteredPeople.length} personnages trouvés dans l'API.</p>
       </header>
 
@@ -141,9 +142,11 @@ function PeopleList() {
         <ul className="characters-grid">
           {filteredPeople.map((person) => (
             <li className="character-card" key={person.uid}>
-              <span className="character-number">{person.uid}</span>
-              <h2>{person.name}</h2>
-              <span className="character-gender">{getFaction(person.name)}</span>
+              <Link to={`/characters/${person.uid}`} className="character-link">
+                <span className="character-number">{person.uid}</span>
+                <h2>{person.name}</h2>
+                <span className="character-gender">{getFaction(person.name)}</span>
+              </Link>
             </li>
           ))}
         </ul>
