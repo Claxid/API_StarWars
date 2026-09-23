@@ -65,7 +65,7 @@ function PeopleList() {
       setError(null);
       try {
         const firstResponse = await fetch('https://www.swapi.tech/api/people?page=1&limit=12');
-        if (!firstResponse.ok) throw new Error('Erreur réseau');
+        if (!firstResponse.ok) throw new Error('Network error');
 
         const firstPage: PeopleResponse = await firstResponse.json();
         const remainingPages = Array.from(
@@ -75,14 +75,14 @@ function PeopleList() {
         const pages = await Promise.all(
           remainingPages.map(async (page) => {
             const response = await fetch(`https://www.swapi.tech/api/people?page=${page}&limit=12`);
-            if (!response.ok) throw new Error('Erreur réseau');
+            if (!response.ok) throw new Error('Network error');
             return response.json() as Promise<PeopleResponse>;
           }),
         );
 
         setPeople([firstPage, ...pages].flatMap((page) => page.results));
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Une erreur est survenue');
+        setError(err instanceof Error ? err.message : 'An unexpected error occurred');
       } finally {
         setLoading(false);
       }
@@ -97,15 +97,15 @@ function PeopleList() {
     return matchSearch && matchFaction;
   });
 
-  if (loading) return <p>Chargement...</p>;
-  if (error) return <p>Erreur : {error}</p>;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <main className="characters-page">
       <header className="characters-header">
-        <p className="eyebrow">Base de données galactique</p>
-        <h2>Personnages Star Wars</h2>
-        <p>{filteredPeople.length} personnages trouvés dans l'API.</p>
+        <p className="eyebrow">Galactic database</p>
+        <h2>Star Wars Characters</h2>
+        <p>{filteredPeople.length} characters found in the API.</p>
       </header>
 
       <div className="filters-row">
@@ -113,10 +113,10 @@ function PeopleList() {
           <input
             type="text"
             className="search-input"
-            placeholder="Rechercher un personnage..."
+            placeholder="Search for a character..."
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            aria-label="Rechercher un personnage"
+            aria-label="Search for a character"
           />
         </div>
 
@@ -128,16 +128,16 @@ function PeopleList() {
             value={factionFilter}
             onChange={(event) => setFactionFilter(event.target.value as FactionFilter)}
           >
-            <option value="all">Tous</option>
+            <option value="all">All</option>
             <option value="jedi">Jedi</option>
             <option value="empire">Empire</option>
-            <option value="hunter">Chasseur de prime</option>
+            <option value="hunter">Bounty Hunter</option>
           </select>
         </div>
       </div>
 
       {filteredPeople.length === 0 ? (
-        <p className="no-result">Aucun personnage trouvé pour "{search}" avec ce filtre.</p>
+        <p className="no-result">No character found for "{search}" with this filter.</p>
       ) : (
         <ul className="characters-grid">
           {filteredPeople.map((person) => (
@@ -149,7 +149,7 @@ function PeopleList() {
               </div>
 
               <Link to={`/characters/${person.uid}`} className="character-detail-button">
-                Détail
+                View details
               </Link>
             </li>
           ))}

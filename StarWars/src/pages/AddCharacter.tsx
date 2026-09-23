@@ -30,13 +30,13 @@ export default function AddCharacter() {
             <li key={`${character.name}-${index}`}>
               <strong>{character.name}</strong>
               <ul>
-                <li>Gender : {character.gender}</li>
-                <li>Height : {character.height}</li>
-                <li>Mass : {character.mass}</li>
-                <li>Birth Year : {character.birthYear}</li>
-                <li>Eye Color : {character.eyeColor}</li>
-                <li>Hair Color : {character.hairColor}</li>
-                <li>Skin Color : {character.skinColor}</li>
+                <li>Gender: {character.gender}</li>
+                <li>Height: {character.height}</li>
+                <li>Mass: {character.mass}</li>
+                <li>Birth Year: {character.birthYear}</li>
+                <li>Eye Color: {character.eyeColor}</li>
+                <li>Hair Color: {character.hairColor}</li>
+                <li>Skin Color: {character.skinColor}</li>
               </ul>
             </li>
           ))}

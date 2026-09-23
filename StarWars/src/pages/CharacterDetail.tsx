@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 interface CharacterDetailData {
   uid: string;
   name: string;
   description: string;
   properties?: {
+    name?: string;
     height?: string;
     mass?: string;
     gender?: string;
@@ -33,7 +34,7 @@ export default function CharacterDetail() {
 
   useEffect(() => {
     if (!id) {
-      setError('Aucun personnage sélectionné.');
+      setError('No character selected.');
       setLoading(false);
       return;
     }
@@ -45,24 +46,24 @@ export default function CharacterDetail() {
 
         const response = await fetch(`https://www.swapi.tech/api/people/${id}`);
         if (!response.ok) {
-          throw new Error('Personnage introuvable');
+          throw new Error('Character not found');
         }
 
         const data: CharacterApiResponse = await response.json();
         const result = data.result;
 
         if (!result) {
-          throw new Error('Aucune donnée reçue pour ce personnage');
+          throw new Error('No data received for this character');
         }
 
         setCharacter({
           uid: result.uid ?? id,
-          name: result.properties?.name ?? result.name ?? 'Personnage',
-          description: result.description ?? 'Aucune description disponible.',
+          name: result.properties?.name ?? result.name ?? 'Character',
+          description: result.description ?? 'No description available.',
           properties: result.properties ?? {},
         });
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erreur inconnue');
+        setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
         setLoading(false);
       }
@@ -71,24 +72,77 @@ export default function CharacterDetail() {
     fetchCharacter();
   }, [id]);
 
-  if (loading) return <p>login du personnage...</p>;
-  if (error) return <p>Erreur : {error}</p>;
-  if (!character) return <p>login introuvable.</p>;
+  if (loading) {
+    return (
+      <main className="character-detail-page character-detail-state">
+        <span className="detail-kicker">Galactic archives</span>
+        <p>Loading profile...</p>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className="character-detail-page character-detail-state">
+        <span className="detail-kicker">Navigation error</span>
+        <h1>Profile unavailable</h1>
+        <p>{error}</p>
+        <Link className="detail-back-link" to="/characters">Back to characters</Link>
+      </main>
+    );
+  }
+
+  if (!character) {
+    return (
+      <main className="character-detail-page character-detail-state">
+        <h1>Profile not found</h1>
+        <Link className="detail-back-link" to="/characters">Back to characters</Link>
+      </main>
+    );
+  }
+
+  const details: [string, unknown, string?][] = [
+    ['Name', character.properties?.name],
+    ['Height', character.properties?.height, 'cm'],
+    ['Gender', character.properties?.gender],
+    ['Mass', character.properties?.mass, 'kg'],
+    ['Eyes', character.properties?.eye_color],
+    ['Birth year', character.properties?.birth_year],
+    ['Skin', character.properties?.skin_color],
+    ['Hair', character.properties?.hair_color],
+  ];
+
+  const formatDetail = (value: unknown) => {
+    if (Array.isArray(value)) return value.length ? `${value.length} item(s)` : 'None';
+    if (typeof value === 'string' && value.includes('T')) return new Date(value).toLocaleDateString('fr-FR');
+    return value == null ? 'Unknown' : String(value);
+  };
 
   return (
     <main className="character-detail-page">
-      <h2>{character.name}</h2>
-      <p>{character.description}</p>
+      <Link className="detail-back-link" to="/characters">← All characters</Link>
 
-      <ul>
-        <li>Gender : {character.properties?.gender ?? 'Inconnu'}</li>
-        <li>Height : {character.properties?.height ?? 'Inconnu'}</li>
-        <li>Mass : {character.properties?.mass ?? 'Inconnu'}</li>
-        <li>Birth Year : {character.properties?.birth_year ?? 'Inconnu'}</li>
-        <li>Eye Color : {character.properties?.eye_color ?? 'Inconnu'}</li>
-        <li>Hair Color : {character.properties?.hair_color ?? 'Inconnu'}</li>
-        <li>Skin Color : {character.properties?.skin_color ?? 'Inconnu'}</li>
-      </ul>
+      <section className="character-info-card" aria-labelledby="profile-heading">
+        <div className="character-card-visual">
+          <span className="character-card-code">SW / {character.uid}</span>
+          <span className="character-card-badge">SWAPI Profile</span>
+        </div>
+
+        <div className="character-card-body">
+          <span className="detail-kicker">Galactic archives</span>
+          <h1 id="profile-heading">{character.name}</h1>
+          <p>{character.description}</p>
+
+          <dl className="detail-list">
+            {details.map(([label, value, unit]) => (
+              <div className="detail-list-item" key={label}>
+                <dt>{label}</dt>
+                <dd>{formatDetail(value)}{unit && value ? ` ${unit}` : ''}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
     </main>
   );
 }
