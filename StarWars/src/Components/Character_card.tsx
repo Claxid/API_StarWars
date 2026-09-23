@@ -142,10 +142,14 @@ function PeopleList() {
         <ul className="characters-grid">
           {filteredPeople.map((person) => (
             <li className="character-card" key={person.uid}>
-              <Link to={`/characters/${person.uid}`} className="character-link">
+              <div className="character-card-content">
                 <span className="character-number">{person.uid}</span>
                 <h2>{person.name}</h2>
                 <span className="character-gender">{getFaction(person.name)}</span>
+              </div>
+
+              <Link to={`/characters/${person.uid}`} className="character-detail-button">
+                Détail
               </Link>
             </li>
           ))}

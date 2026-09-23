@@ -21,7 +21,7 @@ export default function AddCharacter() {
 
   return (
     <main className="add-character-page">
-      <h2>Ajouter un personnage</h2>
+      <h2>Add a character</h2>
       <AddCharacterForm onAdd={handleAddCharacter} />
 
       {characters.length > 0 && (
@@ -30,13 +30,13 @@ export default function AddCharacter() {
             <li key={`${character.name}-${index}`}>
               <strong>{character.name}</strong>
               <ul>
-                <li>Genre : {character.gender}</li>
-                <li>Taille : {character.height}</li>
-                <li>Poids : {character.mass}</li>
-                <li>Année de naissance : {character.birthYear}</li>
-                <li>Couleur des yeux : {character.eyeColor}</li>
-                <li>Couleur des cheveux : {character.hairColor}</li>
-                <li>Couleur de peau : {character.skinColor}</li>
+                <li>Gender : {character.gender}</li>
+                <li>Height : {character.height}</li>
+                <li>Mass : {character.mass}</li>
+                <li>Birth Year : {character.birthYear}</li>
+                <li>Eye Color : {character.eyeColor}</li>
+                <li>Hair Color : {character.hairColor}</li>
+                <li>Skin Color : {character.skinColor}</li>
               </ul>
             </li>
           ))}
