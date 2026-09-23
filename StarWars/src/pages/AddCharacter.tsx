@@ -25,22 +25,44 @@ export default function AddCharacter() {
       <AddCharacterForm onAdd={handleAddCharacter} />
 
       {characters.length > 0 && (
-        <ul>
-          {characters.map((character, index) => (
-            <li key={`${character.name}-${index}`}>
-              <strong>{character.name}</strong>
-              <ul>
-                <li>Gender: {character.gender}</li>
-                <li>Height: {character.height}</li>
-                <li>Mass: {character.mass}</li>
-                <li>Birth Year: {character.birthYear}</li>
-                <li>Eye Color: {character.eyeColor}</li>
-                <li>Hair Color: {character.hairColor}</li>
-                <li>Skin Color: {character.skinColor}</li>
-              </ul>
-            </li>
-          ))}
-        </ul>
+        <section className="added-characters" aria-label="Added characters">
+          {characters.map((character, index) => {
+            const details = [
+              ['Name', character.name],
+              ['Height', character.height, 'cm'],
+              ['Gender', character.gender],
+              ['Mass', character.mass, 'kg'],
+              ['Eyes', character.eyeColor],
+              ['Birth year', character.birthYear],
+              ['Skin', character.skinColor],
+              ['Hair', character.hairColor],
+            ];
+
+            return (
+              <article className="character-info-card added-character-card" key={`${character.name}-${index}`}>
+                <div className="character-card-visual">
+                  <span className="character-card-code">LOCAL / {index + 1}</span>
+                  <span className="character-card-badge">Added profile</span>
+                </div>
+
+                <div className="character-card-body">
+                  <span className="detail-kicker">Custom archives</span>
+                  <h2>{character.name}</h2>
+                  <p>Custom character profile</p>
+
+                  <dl className="detail-list">
+                    {details.map(([label, value, unit]) => (
+                      <div className="detail-list-item" key={label}>
+                        <dt>{label}</dt>
+                        <dd>{value || 'Unknown'}{unit && value ? ` ${unit}` : ''}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              </article>
+            );
+          })}
+        </section>
       )}
     </main>
   );
