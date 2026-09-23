@@ -57,13 +57,13 @@ export default function AddCharacterForm({ onAdd }: AddCharacterFormProps) {
   return (
     <form className="add-character-form" onSubmit={handleSubmit}>
       <div className="form-field">
-        <label htmlFor="character-name">Nom du personnage</label>
+        <label htmlFor="character-name">Name of the character</label>
         <input
           id="character-name"
           type="text"
           value={name}
           onChange={(event) => setName(event.target.value)}
-          placeholder="Nom du personnage"
+          placeholder="Name of the character"
         />
       </div>
 
