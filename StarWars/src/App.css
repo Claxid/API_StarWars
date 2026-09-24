@@ -247,25 +247,25 @@
   position: absolute;
   top: 14px;
   right: 14px;
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   padding: 0;
-  border: 1px solid rgba(192, 132, 252, 0.65);
-  border-radius: 50%;
+  border: 0;
   background: transparent;
+  color: #c084fc;
   cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  font-size: 1.45rem;
+  line-height: 1;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .selection-dot:hover {
   transform: scale(1.12);
-  border-color: #c084fc;
+  color: #d8b4fe;
 }
 
 .selection-dot[aria-pressed='true'] {
-  background: #a855f7;
-  border-color: #d8b4fe;
-  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.18);
+  color: #a855f7;
 }
 
 .selection-dot:focus-visible {

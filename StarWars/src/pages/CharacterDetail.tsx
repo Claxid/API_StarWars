@@ -150,7 +150,9 @@ export default function CharacterDetail() {
               : `Add ${character.name} to my selection`}
             aria-pressed={isFavorite}
             onClick={toggleFavorite}
-          />
+          >
+            <span aria-hidden="true">{isFavorite ? '★' : '☆'}</span>
+          </button>
           <span className="detail-kicker">Galactic archives</span>
           <h1 id="profile-heading">{character.name}</h1>
           <p>{character.description}</p>

@@ -162,7 +162,11 @@ function PeopleList() {
                   : `Ajouter ${person.name} à ma sélection`}
                 aria-pressed={favorites.some((favorite) => favorite.uid === person.uid)}
                 onClick={() => toggleFavorite(person)}
-              />
+              >
+                <span aria-hidden="true">
+                  {favorites.some((favorite) => favorite.uid === person.uid) ? '★' : '☆'}
+                </span>
+              </button>
               <div className="character-card-content">
                 <span className="character-number">{person.uid}</span>
                 <h2>{person.name}</h2>
