@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { getFavorites, saveFavorites, type FavoriteCharacter } from '../utils/favorites';
 
 interface Person {
   uid: string;
@@ -19,6 +20,17 @@ function PeopleList() {
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState('');
   const [factionFilter, setFactionFilter] = useState<FactionFilter>('all');
+  const [favorites, setFavorites] = useState<FavoriteCharacter[]>(getFavorites);
+
+  const toggleFavorite = (person: Person) => {
+    const isFavorite = favorites.some((favorite) => favorite.uid === person.uid);
+    const nextFavorites = isFavorite
+      ? favorites.filter((favorite) => favorite.uid !== person.uid)
+      : [...favorites, person];
+
+    setFavorites(nextFavorites);
+    saveFavorites(nextFavorites);
+  };
 
   const getFaction = (name: string): FactionFilter => {
     const normalizedName = name.toLowerCase();
@@ -142,15 +154,26 @@ function PeopleList() {
         <ul className="characters-grid">
           {filteredPeople.map((person) => (
             <li className="character-card" key={person.uid}>
+              <button
+                type="button"
+                className="selection-dot"
+                aria-label={favorites.some((favorite) => favorite.uid === person.uid)
+                  ? `Retirer ${person.name} de ma sélection`
+                  : `Ajouter ${person.name} à ma sélection`}
+                aria-pressed={favorites.some((favorite) => favorite.uid === person.uid)}
+                onClick={() => toggleFavorite(person)}
+              />
               <div className="character-card-content">
                 <span className="character-number">{person.uid}</span>
                 <h2>{person.name}</h2>
                 <span className="character-gender">{getFaction(person.name)}</span>
               </div>
 
-              <Link to={`/characters/${person.uid}`} className="character-detail-button">
-                View details
-              </Link>
+              <div className="character-card-actions">
+                <Link to={`/characters/${person.uid}`} className="character-detail-button">
+                  View details
+                </Link>
+              </div>
             </li>
           ))}
         </ul>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { getFavorites, saveFavorites, type FavoriteCharacter } from '../utils/favorites';
 
 interface CharacterDetailData {
   uid: string;
@@ -31,6 +32,7 @@ export default function CharacterDetail() {
   const [character, setCharacter] = useState<CharacterDetailData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [favorites, setFavorites] = useState<FavoriteCharacter[]>(getFavorites);
 
   useEffect(() => {
     if (!id) {
@@ -118,6 +120,17 @@ export default function CharacterDetail() {
     return value == null ? 'Unknown' : String(value);
   };
 
+  const isFavorite = favorites.some((favorite) => favorite.uid === character.uid);
+
+  const toggleFavorite = () => {
+    const nextFavorites = isFavorite
+      ? favorites.filter((favorite) => favorite.uid !== character.uid)
+      : [...favorites, { uid: character.uid, name: character.name }];
+
+    setFavorites(nextFavorites);
+    saveFavorites(nextFavorites);
+  };
+
   return (
     <main className="character-detail-page">
       <Link className="detail-back-link" to="/characters">← All characters</Link>
@@ -129,6 +142,15 @@ export default function CharacterDetail() {
         </div>
 
         <div className="character-card-body">
+          <button
+            type="button"
+            className="selection-dot detail-selection-dot"
+            aria-label={isFavorite
+              ? `Remove ${character.name} from my selection`
+              : `Add ${character.name} to my selection`}
+            aria-pressed={isFavorite}
+            onClick={toggleFavorite}
+          />
           <span className="detail-kicker">Galactic archives</span>
           <h1 id="profile-heading">{character.name}</h1>
           <p>{character.description}</p>

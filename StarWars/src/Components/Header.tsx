@@ -12,8 +12,15 @@ export default function Header() {
           <button type="button" className="home-button">View Characters</button>
         </Link>
 
+        
+
         <Link to="/add-character" className="home-link">
           <button type="button" className="home-button">Add Character</button>
+        </Link>
+
+
+        <Link to="/selection" className="home-link">
+          <button type="button" className="home-button">My selection</button>
         </Link>
       </div>
     </header>
