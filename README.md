@@ -43,9 +43,7 @@ Vite affiche l'adresse locale à ouvrir dans le navigateur après le démarrage.
 | Commande | Description |
 | --- | --- |
 | `npm run dev` | Démarre le serveur de développement Vite. |
-| `npm run build` | Vérifie les types TypeScript et crée la version de production dans `dist/`. |
-| `npm run preview` | Sert localement la version de production. |
-| `npm run lint` | Lance ESLint sur le projet. |
+| --- | --- |
 
 ## Pages de l'application
 
@@ -53,7 +51,7 @@ Vite affiche l'adresse locale à ouvrir dans le navigateur après le démarrage.
 | --- | --- |
 | `/` et `/home` | Page d'accueil. |
 | `/characters` | Liste, recherche et filtres des personnages. |
-| `/characters/:id` | Fiche détaillée d'un personnage de SWAPI.tech. |
+| `/characters/id` | Fiche détaillée d'un personnage de SWAPI.tech. |
 | `/selection` | Liste des personnages favoris enregistrés dans le navigateur. |
 | `/add-character` | Formulaire de création d'une fiche personnalisée temporaire. |
 
